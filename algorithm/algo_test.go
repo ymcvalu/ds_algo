@@ -47,3 +47,32 @@ func TestRegMatch(t *testing.T) {
 func TestZigZagConvert(t *testing.T) {
 	t.Log(convert("AB", 1))
 }
+
+func TestQuickSoft(t *testing.T) {
+	arr := []int{2, 5, 6, 1, 7, 9, 0}
+	QuickSoft(arr)
+	t.Log(arr)
+}
+
+func TestReverseNodesInKGroup(t *testing.T) {
+	n1 := []int{1, 2, 3}
+	l1 := &ListNode{}
+	cur := l1
+	for _, v := range n1 {
+		cur.Next = &ListNode{Val: v}
+		cur = cur.Next
+	}
+	l1 = l1.Next
+	l := reverseKGroup(l1, 2)
+
+	for l != nil {
+		t.Log(l.Val)
+		l = l.Next
+	}
+}
+
+func TestLongestValidParentheses(t *testing.T){
+	t.Log(longestValidParentheses("()(()())"))
+
+	t.Log(longestValidParentheses("()())((((()(()))))()((()(()(())()))(()((()(())(((()((())())(((())(())())()()(()((((((()()(()())()))())()((()())((((((())()()()))(((()()((()()(()((((()))((()))(()(()())()(()((())())))(()()())()((((())"))
+}

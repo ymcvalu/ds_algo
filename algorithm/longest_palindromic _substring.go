@@ -21,24 +21,21 @@ func longestPalindrome(s string) string {
 	matrix := make([][]int, sl)
 	for i := range matrix {
 		matrix[i] = make([]int, sl)
+		matrix[i][i] = 1
 	}
 
 	var maxI, maxJ, max int
 
-	for l := 0; l < sl; l++ {
+	for l := 1; l < sl; l++ {
 		for i := 0; i+l < sl; i++ {
 			j := i + l
 			if s[i] != s[j] {
 				continue
 			}
-			if j-i == 1 {
+			if l == 1 {
 				matrix[i][j] = 2
-			} else if j-i > 1 {
-				if matrix[i+1][j-1] > 0 {
-					matrix[i][j] = matrix[i+1][j-1] + 2
-				}
-			} else {
-				matrix[i][j] = 1
+			} else if matrix[i+1][j-1] > 0 {
+				matrix[i][j] = matrix[i+1][j-1] + 2
 			}
 			if matrix[i][j] > max {
 				max, maxI, maxJ = matrix[i][j], i, j
