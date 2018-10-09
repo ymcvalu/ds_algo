@@ -114,24 +114,24 @@ func (h *KaryHeap) up(idx int) {
 	}
 }
 
-func (h *KaryHeap) Insert(elem interface{}) {
+func (h *KaryHeap) Push(elem interface{}) {
 	h.lk.Lock()
-	h.insert(elem)
+	h.push(elem)
 	h.lk.Unlock()
 }
 
-func (h *KaryHeap) insert(elem interface{}) {
+func (h *KaryHeap) push(elem interface{}) {
 	h.array = append(h.array, elem)
 	h.up(len(h.array) - 1)
 }
 
-func (h *KaryHeap) ExtractTop() interface{} {
+func (h *KaryHeap) Pop() interface{} {
 	h.lk.Lock()
 	defer h.lk.Lock()
-	return h.extractTop()
+	return h.pop()
 }
 
-func (h *KaryHeap) extractTop() interface{} {
+func (h *KaryHeap) pop() interface{} {
 	if len(h.array) == 0 {
 		return nil
 	}
@@ -142,13 +142,13 @@ func (h *KaryHeap) extractTop() interface{} {
 	return elem
 }
 
-func (h *KaryHeap) Seek(idx int) interface{} {
+func (h *KaryHeap) Peek(idx int) interface{} {
 	h.lk.Lock()
 	defer h.lk.Unlock()
-	return h.seek(idx)
+	return h.peek(idx)
 }
 
-func (h *KaryHeap) seek(idx int) interface{} {
+func (h *KaryHeap) peek(idx int) interface{} {
 	if idx < 0 || idx >= len(h.array) {
 		return nil
 	}
