@@ -120,6 +120,8 @@ func (n *Node) delete(key interface{}, com CompareFunc) *Node {
 		n.left = n.left.delete(del.Key, com)
 	}
 
+	// n.height = max(n.left.h(), n.right.h()) + 1
+
 	return n.reBalance(com)
 }
 

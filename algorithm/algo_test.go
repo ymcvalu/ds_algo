@@ -9,7 +9,7 @@ func TestLongestSubstr(t *testing.T) {
 }
 func TestAddTwoNums(t *testing.T) {
 	n1 := []int{3, 4, 2}
-	n2 := []int{7,}
+	n2 := []int{7}
 	l1 := &ListNode{}
 	cur := l1
 	for _, v := range n1 {
@@ -71,8 +71,17 @@ func TestReverseNodesInKGroup(t *testing.T) {
 	}
 }
 
-func TestLongestValidParentheses(t *testing.T){
+func TestLongestValidParentheses(t *testing.T) {
 	t.Log(longestValidParentheses("()(()())"))
 
 	t.Log(longestValidParentheses("()())((((()(()))))()((()(()(())()))(()((()(())(((()((())())(((())(())())()()(()((((((()()(()())()))())()((()())((((((())()()()))(((()()((()()(()((((()))((()))(()(()())()(()((())())))(()()())()((((())"))
+}
+
+func TestLCS(t *testing.T) {
+	t.Log(LCS("1253789", "1234789"))
+}
+
+func TestNumDistinct(t *testing.T) {
+	t.Log(NumDistinct("rabbbit", "rabbit"))
+	t.Log(NumDistinct("babgbag", "bag"))
 }
