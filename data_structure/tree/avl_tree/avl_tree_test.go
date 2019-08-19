@@ -37,9 +37,19 @@ func TestInsert(t *testing.T) {
 	tree.Delete(1)
 	tree.Delete(5)
 	tree.Delete(4)
-	nodes := tree.PreOrder()
+
+	nodes := tree.Slice()
 
 	for _, n := range nodes {
 		t.Log(n.height, n.Key)
 	}
+
+	tree.Walk(func(k, v interface{}) bool {
+		t.Log(k)
+		if k==13{
+			return false
+		}
+		return true
+	})
+
 }

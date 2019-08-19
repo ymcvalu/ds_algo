@@ -85,3 +85,32 @@ func TestNumDistinct(t *testing.T) {
 	t.Log(NumDistinct("rabbbit", "rabbit"))
 	t.Log(NumDistinct("babgbag", "bag"))
 }
+
+func TestFindMedianFromDataStream(t *testing.T) {
+	f := Constructor()
+	f.AddNum(6)
+	// 6
+	t.Log(f.FindMedian()) // 6
+	f.AddNum(10)
+	// 6 10
+	t.Log(f.FindMedian()) // 8
+	f.AddNum(2)
+	// 2 6 10
+	t.Log(f.FindMedian()) //6
+	f.AddNum(6)
+	// 2 6 6 10
+	f.node.Walk(func(k, v interface{}) bool {
+		t.Log("+", k, v)
+		return true
+	})
+	t.Log(f.FindMedian()) // 6
+	f.AddNum(5)
+	// 2 5 6 6 10
+	t.Log(f.FindMedian()) // 6
+	// 2 5 6 6 6 10
+	f.AddNum(6)
+
+	f.AddNum(3)
+	f.AddNum(1)
+	t.Log(f.FindMedian())
+}
