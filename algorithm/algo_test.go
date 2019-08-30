@@ -99,10 +99,7 @@ func TestFindMedianFromDataStream(t *testing.T) {
 	t.Log(f.FindMedian()) //6
 	f.AddNum(6)
 	// 2 6 6 10
-	f.node.Walk(func(k, v interface{}) bool {
-		t.Log("+", k, v)
-		return true
-	})
+
 	t.Log(f.FindMedian()) // 6
 	f.AddNum(5)
 	// 2 5 6 6 10
@@ -113,4 +110,9 @@ func TestFindMedianFromDataStream(t *testing.T) {
 	f.AddNum(3)
 	f.AddNum(1)
 	t.Log(f.FindMedian())
+}
+
+func TestRob(t *testing.T) {
+	ps, max := rob([]int{1, 7, 3, 1, 9})
+	t.Log(ps, max)
 }
