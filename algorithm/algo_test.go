@@ -1,6 +1,7 @@
 package algorithm
 
 import (
+	"math"
 	"testing"
 )
 
@@ -115,4 +116,16 @@ func TestFindMedianFromDataStream(t *testing.T) {
 func TestRob(t *testing.T) {
 	ps, max := rob([]int{1, 7, 3, 1, 9})
 	t.Log(ps, max)
+}
+
+func TestPrim(t *testing.T) {
+	NO_EDGE := int64(math.MaxInt64)
+	graph := [][]int64{
+		{0, 1, NO_EDGE, 2, 3},
+		{1, 0, 4, 6, NO_EDGE},
+		{2, 4, 0, 3, 2},
+		{NO_EDGE, 6, 3, 0, 7},
+		{3, NO_EDGE, 2, 7, 0},
+	}
+	Prim(graph)
 }
