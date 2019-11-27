@@ -129,3 +129,11 @@ func TestPrim(t *testing.T) {
 	}
 	Prim(graph)
 }
+
+func TestCalc8Queue(t *testing.T) {
+	queue_8()
+}
+
+func TestHanoi(t *testing.T) {
+	Hanoi(4)
+}
