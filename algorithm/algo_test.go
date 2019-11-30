@@ -137,3 +137,16 @@ func TestCalc8Queue(t *testing.T) {
 func TestHanoi(t *testing.T) {
 	Hanoi(4)
 }
+
+func TestEditDist(t *testing.T) {
+	hello := []string{
+		"hello", "helloo", "holle", "olle", "hello", "holl", "hell", "helo",
+	}
+
+	for i := range hello {
+		t.Log(hello[i], editDist(hello[i], "hello"))
+	}
+
+	t.Log(editDist("xxxxyyyy", "yyyyy"))
+
+}
