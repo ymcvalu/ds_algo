@@ -147,6 +147,28 @@ func TestEditDist(t *testing.T) {
 		t.Log(hello[i], editDist(hello[i], "hello"))
 	}
 
-	t.Log(editDist("xxxxyyyy", "yyyyy"))
+	t.Log(editDist("xxxxyyyyxx", "yyyyy"))
 
+}
+
+func TestCalculateMinimumHP(t *testing.T) {
+	t.Log(calculateMinimumHP([][]int{
+		{-2, -3, 3},
+		{-5, -10, 1},
+		{10, 30, -5},
+	}))
+	t.Log(calculateMinimumHP([][]int{
+		{1, -2, 3},
+		{2, -2, -2},
+	}))
+	t.Log(calculateMinimumHP([][]int{{-3, 5}}))
+	t.Log(calculateMinimumHP([][]int{{0}}))
+	t.Log(calculateMinimumHP([][]int{{200}}))
+	t.Log(calculateMinimumHP([][]int{{-200}}))
+}
+
+func TestThrowEgg(t *testing.T) {
+	t.Log(throwEgg(100, 2)) // 14
+	t.Log(throwEgg(200, 2)) // 20
+	t.Log(throwEgg(10, 3))
 }
