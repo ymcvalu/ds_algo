@@ -8,7 +8,7 @@ import (
 
 func TestRbTree(t *testing.T) {
 	N := 1000000
-	D := 666666
+	D := 434343
 
 	set := make(map[int]struct{}, N)
 	rb := New(func(i, j interface{}) int {

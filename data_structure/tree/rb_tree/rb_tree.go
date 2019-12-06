@@ -25,21 +25,10 @@ type node struct {
 	color color
 }
 
-// the leaves of rb-tree is always black and Nil
-var Nil = &node{
-	color: BLACK,
-}
-
-func init() {
-	Nil.p = Nil
-	Nil.l = Nil
-	Nil.r = Nil
-}
-
 func (n *node) afterIns() *node {
 	c := n
-	for c.p != Nil && c.color == RED && c.p.color == RED {
-		if u := c.uncle(); u.color == RED {
+	for c.p != nil && c.isRed() && c.p.isRed() {
+		if u := c.uncle(); u.isRed() {
 			// split the full 4-node
 			c.p.color = BLACK
 			u.color = BLACK
@@ -69,39 +58,39 @@ func (n *node) afterIns() *node {
 		}
 	}
 
-	if c.p == Nil {
-		if c.color != BLACK {
+	if c.p == nil {
+		if c.isRed() {
 			c.color = BLACK
 		}
 		return c
 	}
 
-	return Nil
+	return nil
 }
 
 func (n *node) del() *node {
 	// n is red, we can remove directly
-	if n.color == RED {
+	if n.isRed() {
 		n.drop()
-		return Nil
-	} else if n.l.color == RED {
+		return nil
+	} else if n.l.isRed() {
 		n.l.color = BLACK
 		n.drop()
-		return Nil
-	} else if n.r.color == RED {
+		return nil
+	} else if n.r.isRed() {
 		n.r.color = BLACK
 		n.drop()
-		return Nil
+		return nil
 	}
 
 	var x = n
 
-	for x.p != Nil {
+	for x.p != nil {
 		// whether x is a left child
 		lb := x.p.l == x
 		s := x.sibling()
 
-		if s.color == RED {
+		if s.isRed() {
 			// p is a 3-node
 			x.p.color = RED
 			s.color = BLACK
@@ -113,11 +102,11 @@ func (n *node) del() *node {
 			s = x.sibling()
 		}
 
-		if s.l.color == BLACK && s.r.color == BLACK {
+		if s.l.isBlack() && s.r.isBlack() {
 			// down overflow
 			s.color = RED
 			x = x.p
-			if x.color == RED {
+			if x.isRed() {
 				x.color = BLACK
 				break
 			}
@@ -125,7 +114,7 @@ func (n *node) del() *node {
 		}
 
 		if lb {
-			if s.r.color == BLACK {
+			if s.r.isBlack() {
 				s.color = RED
 				s.l.color = BLACK
 				s.rightRotate()
@@ -137,7 +126,7 @@ func (n *node) del() *node {
 			x.p.leftRotate()
 
 		} else {
-			if s.l.color == BLACK {
+			if s.l.isBlack() {
 				s.color = RED
 				s.r.color = BLACK
 				s.leftRotate()
@@ -155,7 +144,7 @@ func (n *node) del() *node {
 
 	n.drop()
 
-	for x.p != Nil {
+	for x.p != nil {
 		x = x.p
 	}
 
@@ -163,24 +152,24 @@ func (n *node) del() *node {
 }
 
 func (n *node) predecessor() *node {
-	if n.l == Nil {
-		return Nil
+	if n.l == nil {
+		return nil
 	}
 
-	var c = Nil
-	for c = n.l; c.r != Nil; c = c.r {
+	var c *node
+	for c = n.l; c.r != nil; c = c.r {
 	}
 
 	return c
 }
 
 func (n *node) successor() *node {
-	if n.r == Nil {
-		return Nil
+	if n.r == nil {
+		return nil
 	}
 
-	var c = Nil
-	for c = n.r; c.l != Nil; c = c.l {
+	var c *node
+	for c = n.r; c.l != nil; c = c.l {
 
 	}
 	return c
@@ -203,12 +192,12 @@ func (n *node) leftRotate() {
 	c := a.r
 
 	a.r = c.l
-	if c.l != Nil {
+	if c.l != nil {
 		c.l.p = a
 	}
 	c.l = a
 
-	if a.p != Nil {
+	if a.p != nil {
 		if a == a.p.l {
 			a.p.l = c
 		} else {
@@ -228,12 +217,16 @@ func (n *node) drop() {
 	} else {
 		np = &n.p.r
 	}
-	if n.l != Nil {
+	if n.l != nil {
 		*np = n.l
-		n.l.p = n.p
+		if n.l != nil {
+			n.l.p = n.p
+		}
 	} else {
 		*np = n.r
-		n.r.p = n.p
+		if n.r != nil {
+			n.r.p = n.p
+		}
 	}
 }
 
@@ -254,12 +247,12 @@ func (n *node) rightRotate() {
 	b := a.l
 
 	a.l = b.r
-	if b.r != Nil {
+	if b.r != nil {
 		b.r.p = a
 	}
 	b.r = a
 
-	if a.p != Nil {
+	if a.p != nil {
 		if a == a.p.l {
 			a.p.l = b
 		} else {
@@ -272,19 +265,19 @@ func (n *node) rightRotate() {
 }
 
 func (n *node) grandparent() *node {
-	if n.p != Nil {
+	if n.p != nil {
 		return n.p.p
 	}
-	return Nil
+	return nil
 }
 
 func (n *node) uncle() *node {
 	gp := n.grandparent()
-	if gp == Nil {
-		return Nil
+	if gp == nil {
+		return nil
 	}
 
-	var u = Nil
+	var u *node
 	if gp.l == n.p {
 		u = gp.r
 	} else {
@@ -295,7 +288,7 @@ func (n *node) uncle() *node {
 }
 
 func (n *node) sibling() *node {
-	var s = Nil
+	var s *node
 	// n must has parent
 	if n.p.l == n { // left is self
 		s = n.p.r
@@ -308,27 +301,35 @@ func (n *node) sibling() *node {
 
 func (n *node) preOrder() {
 	fmt.Println(n.string())
-	if n.l != Nil {
+	if n.l != nil {
 		n.l.preOrder()
 	}
-	if n.r != Nil {
+	if n.r != nil {
 		n.r.preOrder()
 	}
 }
 
 func (n *node) postOrder() {
-	if n.l != Nil {
+	if n.l != nil {
 		n.l.postOrder()
 	}
-	if n.r != Nil {
+	if n.r != nil {
 		n.r.postOrder()
 	}
 	fmt.Println(n.string())
 }
 
+func (n *node) isRed() bool {
+	return n != nil && n.color == RED
+}
+
+func (n *node) isBlack() bool {
+	return n == nil || n.color == BLACK
+}
+
 func (n *node) string() string {
 	c := "r"
-	if n.color == BLACK {
+	if n.isBlack() {
 		c = "b"
 	}
 
@@ -338,7 +339,7 @@ func (n *node) string() string {
 func New(cmp Compare) *Tree {
 	return &Tree{
 		cmp:  cmp,
-		root: Nil,
+		root: nil,
 	}
 }
 
@@ -352,12 +353,12 @@ func (t *Tree) Ins(k interface{}, v interface{}) {
 		k:     k,
 		v:     v,
 		color: RED,
-		p:     Nil,
-		l:     Nil,
-		r:     Nil,
+		p:     nil,
+		l:     nil,
+		r:     nil,
 	}
 
-	if t.root == Nil {
+	if t.root == nil {
 		n.color = BLACK
 		t.root = n
 		return
@@ -375,7 +376,7 @@ func (t *Tree) Ins(k interface{}, v interface{}) {
 		} else {
 			np = &p.r
 		}
-		if *np == Nil {
+		if *np == nil {
 			*np = n
 			n.p = p
 			break
@@ -384,18 +385,18 @@ func (t *Tree) Ins(k interface{}, v interface{}) {
 		}
 	}
 
-	if r := n.afterIns(); r != Nil {
+	if r := n.afterIns(); r != nil {
 		t.root = r
 	}
 }
 
 func (t *Tree) Del(key interface{}) interface{} {
-	if t.root == Nil {
+	if t.root == nil {
 		return nil
 	}
 
 	var c = t.root
-	for c != Nil {
+	for c != nil {
 		if b := t.cmp(c.k, key); b == 0 {
 			break
 		} else if b > 0 {
@@ -405,24 +406,24 @@ func (t *Tree) Del(key interface{}) interface{} {
 		}
 	}
 
-	if c == Nil {
+	if c == nil {
 		return nil
 	}
 
 	v := c.v
 
 	d := c.predecessor()
-	if d == Nil {
+	if d == nil {
 		d = c.successor()
 	}
-	if d == Nil {
+	if d == nil {
 		d = c
 	} else {
 		c.k = d.k
 		c.v = d.v
 	}
 
-	if r := d.del(); r != Nil {
+	if r := d.del(); r != nil {
 		t.root = r
 	}
 
@@ -430,12 +431,12 @@ func (t *Tree) Del(key interface{}) interface{} {
 }
 
 func (t *Tree) Search(key interface{}) (interface{}, bool) {
-	if t.root == Nil {
-		return Nil, false
+	if t.root == nil {
+		return nil, false
 	}
 
 	x := t.root
-	for x != Nil {
+	for x != nil {
 		if b := t.cmp(x.k, key); b == 0 {
 			return x.v, true
 		} else if b > 0 {
@@ -445,28 +446,28 @@ func (t *Tree) Search(key interface{}) (interface{}, bool) {
 		}
 	}
 
-	return Nil, false
+	return nil, false
 
 }
 
 func (t *Tree) PreOder() {
-	if t.root != Nil {
+	if t.root != nil {
 		t.root.preOrder()
 	}
 }
 
 func (t *Tree) PostOrder() {
-	if t.root != Nil {
+	if t.root != nil {
 		t.root.postOrder()
 	}
 }
 
 func (t *Tree) IsRbTree() bool {
-	if t.root == Nil {
+	if t.root == nil {
 		return true
 	}
 
-	if t.root.color != BLACK {
+	if t.root.isRed() {
 		return false
 	}
 	_, is := t.root.verify(0)
@@ -474,15 +475,15 @@ func (t *Tree) IsRbTree() bool {
 }
 
 func (n *node) verify(h int) (int, bool) {
-	if n == Nil {
+	if n == nil {
 		return h, true
 	}
 
-	if n.color == RED && n.p.color == RED {
+	if n.isRed() && n.p.isRed() {
 		return 0, false
 	}
 
-	if n.color == BLACK {
+	if n.isBlack() {
 		h++
 	}
 
