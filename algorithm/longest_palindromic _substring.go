@@ -10,18 +10,49 @@ Example 1:
 Example 2:
 	Input: "cbbd"
 	Output: "bb"
- */
+*/
 
-func longestPalindrome(s string) string {
+func longestPalindrome1(s string) string {
 	sl := len(s)
 	if sl <= 1 {
 		return s
 	}
 
-	matrix := make([][]int, sl)
-	for i := range matrix {
-		matrix[i] = make([]int, sl)
-		matrix[i][i] = 1
+	var (
+		mi, mj, max int
+	)
+
+	dp := make([][]int, sl)
+	for i := range dp {
+		dp[i] = make([]int, sl)
+		dp[i][i] = 1
+	}
+
+	for d := 1; d < sl; d++ {
+		for i := 0; i+d < sl; i++ {
+			if s[i] == s[i+d] && dp[i+1][i+d-1] == d-1 {
+				dp[i][i+d] = d + 1
+				if d+2 > max {
+					max = d + 1
+					mi = i
+					mj = i + d
+				}
+			}
+		}
+	}
+	return s[mi : mj+1]
+}
+
+func longestPalindrome2(s string) string {
+	sl := len(s)
+	if sl <= 1 {
+		return s
+	}
+
+	dp := make([][]int, sl)
+	for i := range dp {
+		dp[i] = make([]int, sl)
+		dp[i][i] = 1
 	}
 
 	var maxI, maxJ, max int
@@ -33,12 +64,12 @@ func longestPalindrome(s string) string {
 				continue
 			}
 			if l == 1 {
-				matrix[i][j] = 2
-			} else if matrix[i+1][j-1] > 0 {
-				matrix[i][j] = matrix[i+1][j-1] + 2
+				dp[i][j] = 2
+			} else if dp[i+1][j-1] > 0 {
+				dp[i][j] = dp[i+1][j-1] + 2
 			}
-			if matrix[i][j] > max {
-				max, maxI, maxJ = matrix[i][j], i, j
+			if dp[i][j] > max {
+				max, maxI, maxJ = dp[i][j], i, j
 			}
 		}
 	}

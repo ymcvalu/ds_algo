@@ -6,8 +6,14 @@ import (
 )
 
 func TestLongestSubstr(t *testing.T) {
-	t.Log(lengthOfLongestSubstring("abcaadbc"))
+	t.Log(lengthOfLongestSubstring1("abcaadbcefsad"))
+	t.Log(lengthOfLongestSubstring2("abcaadbcefsad"))
+	t.Log(lengthOfLongestSubstring2("abcdefg"))
+	t.Log(lengthOfLongestSubstring2("aaabedks"))
+	t.Log(lengthOfLongestSubstring2("adbcdd"))
+	t.Log(lengthOfLongestSubstring2("aadfghjkllkjqwertyuiioppoi"))
 }
+
 func TestAddTwoNums(t *testing.T) {
 	n1 := []int{3, 4, 2}
 	n2 := []int{7}
@@ -36,7 +42,9 @@ func TestMedianNum(t *testing.T) {
 }
 
 func TestLongestPalindromicSubstring(t *testing.T) {
-	t.Log(longestPalindrome("abccb"))
+	t.Log(longestPalindrome1("abccb"), longestPalindrome2("abccb"))
+	t.Log(longestPalindrome1("abccbajklsdfjkabbbbbajskldfjlk"), longestPalindrome2("abccbajklsdfjkabbbbbajskldfjlk"))
+	t.Log(longestPalindrome1("sdfdsfdsfjjddkkddjjksl"), longestPalindrome2("sdfdsfdsfjjddkkddjjksl"))
 }
 
 func TestRegMatch(t *testing.T) {
@@ -171,4 +179,53 @@ func TestThrowEgg(t *testing.T) {
 	t.Log(throwEgg(100, 2)) // 14
 	t.Log(throwEgg(200, 2)) // 20
 	t.Log(throwEgg(10, 3))
+}
+
+func TestFindOneElem3(t *testing.T) {
+	t.Log(findOneElem3([]int{1, 2, 3, 1, 2, 3, 1, 2, 3, 4}))
+}
+
+func TestFindOneElem2(t *testing.T) {
+	t.Log(findOneElem2([]int{1, 2, 1, 2, 3}))
+}
+
+func TestSwapLetter(t *testing.T) {
+	t.Log(swapLetter("abcbaa", 2))
+	t.Log(swapLetter("abcbaa", 3))
+	t.Log(swapLetter("dabdcddsd", 4))
+	t.Log(swapLetter("dabdcddsd", 5))
+
+}
+
+func TestSkipStage(t *testing.T) {
+	t.Log(skipStage(1))
+	t.Log(skipStage(2))
+	t.Log(skipStage(3))
+	t.Log(skipStage(4))
+	t.Log(skipStage(5))
+	t.Log(skipStage(6))
+	t.Log(skipStage(7))
+}
+
+func TestMaxArea(t *testing.T) {
+	t.Log(maxArea([]int{1, 8, 6, 2, 5, 4, 8, 3, 7}))
+}
+
+func TestSidlingWindowMaximum(t *testing.T) {
+	t.Log(maxSlidingWindow([]int{1, 3, -1, -3, 5, 3, 6, 7, 5, 4, 6, 9, 7, 2}, 3))
+}
+
+func TestMaxProfit(t *testing.T) {
+	t.Log(maxProfit([]int{7, 1, 5, 3, 6, 4}))
+	t.Log(maxProfit([]int{7, 6, 4, 3, 1}))
+
+	t.Log(maxProfit2([]int{7, 1, 5, 3, 6, 4}))
+	t.Log(maxProfit2([]int{1, 2, 3, 4, 5}))
+
+	t.Log(maxProfit3([]int{3, 3, 5, 0, 0, 3, 1, 4}))
+	t.Log(maxProfit3([]int{1, 3, 0, 5, 1, 2, 1, 7}))
+	t.Log(maxProfit3([]int{1, 2, 3, 4, 5}))
+	t.Log(maxProfit3([]int{7, 6, 4, 3, 1}))
+	t.Log(maxProfit3([]int{0, 3, 0, 5, 0, 2}))
+
 }

@@ -30,6 +30,7 @@ func calcMinHP(dungeon [][]int, i, j int, max, h int, curMin *int) {
 		}
 	}
 
+	// 减枝
 	if 1-max > *curMin {
 		return
 	}
