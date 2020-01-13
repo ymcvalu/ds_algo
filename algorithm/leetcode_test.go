@@ -2,7 +2,9 @@ package algorithm
 
 import (
 	"math"
+	"math/rand"
 	"testing"
+	"time"
 )
 
 func TestLongestSubstr(t *testing.T) {
@@ -173,6 +175,9 @@ func TestCalculateMinimumHP(t *testing.T) {
 	t.Log(calculateMinimumHP([][]int{{0}}))
 	t.Log(calculateMinimumHP([][]int{{200}}))
 	t.Log(calculateMinimumHP([][]int{{-200}}))
+	t.Log(calculateMinimumHP([][]int{{0, 0, 0}, {1, 1, -1}}))
+	t.Log(calculateMinimumHP([][]int{{1, 2, 1}, {-2, -3, -3}, {3, 2, -2}}))
+	t.Log(calculateMinimumHP([][]int{{1, -3, 3}, {0, -2, 0}, {-3, -3, -3}}))
 }
 
 func TestThrowEgg(t *testing.T) {
@@ -227,5 +232,166 @@ func TestMaxProfit(t *testing.T) {
 	t.Log(maxProfit3([]int{1, 2, 3, 4, 5}))
 	t.Log(maxProfit3([]int{7, 6, 4, 3, 1}))
 	t.Log(maxProfit3([]int{0, 3, 0, 5, 0, 2}))
+
+}
+
+func TestIsPalindrome(t *testing.T) {
+	t.Log(isPalindrome("A man, a plan, a canal: Panama"))
+	t.Log(isPalindrome("race a car`"))
+	t.Log(isPalindrome(".,"))
+}
+
+func TestReverseInteger(t *testing.T) {
+	t.Log(reverse(123), reverse(-123), reverse(120), reverse(102), reverse(2147483647), reverse(-2147483412))
+}
+
+func TestMyAtoi(t *testing.T) {
+	t.Log(myAtoi("32"), myAtoi("-32"), myAtoi("+32"), myAtoi("+0032"), myAtoi("-0032"))
+	t.Log(myAtoi("  +32"), myAtoi("   -32"))
+	t.Log(myAtoi("a+32"), myAtoi("a-32"))
+	t.Log(myAtoi("+32ds"), myAtoi("-32d"))
+	t.Log(myAtoi("12323490324302984032948"), myAtoi("-3249023483294932"))
+	t.Log(myAtoi("9223372036854775808"))
+	t.Log(myAtoi("-9223372036854775809"))
+}
+
+func TestPalindromeNumber(t *testing.T) {
+	t.Log(isPalindromeNum(-121))
+	t.Log(isPalindromeNum(121))
+	t.Log(isPalindromeNum(10))
+	t.Log(isPalindromeNum(1001))
+	t.Log(isPalindromeNum(10001))
+}
+
+func TestCherryPickup(t *testing.T) {
+	t.Log(cherryPickup([][]int{
+		{0, 1, -1},
+		{1, 0, -1},
+		{1, 1, 1},
+	}))
+
+	t.Log(cherryPickup([][]int{
+		{1, 1, 1},
+		{1, 1, 1},
+		{1, 1, 1},
+	}))
+	t.Log(cherryPickup([][]int{
+		{1, 1, 1},
+		{1, -1, 1},
+		{1, 1, 1},
+	}))
+
+	t.Log(cherryPickup([][]int{
+		{0, 1, 1, 0, 0},
+		{1, 1, 1, 1, 0},
+		{-1, 1, 1, 1, -1},
+		{0, 1, 1, 1, 0},
+		{1, 0, -1, 0, 0},
+	}))
+
+	t.Log(cherryPickup([][]int{
+		{1, 1, 1, 1, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 1},
+		{1, 0, 0, 1, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0},
+		{0, 0, 0, 1, 0, 0, 0},
+		{0, 0, 0, 1, 1, 1, 1},
+	}), 15)
+}
+
+func TestInsertionSort(t *testing.T) {
+	N := 1000
+	arr := make([]int, N)
+
+	for i := 0; i < N; i++ {
+		arr[i] = rand.Intn(N)
+	}
+
+	insertionSort(arr)
+	t.Log(arr)
+}
+
+func TestSelectionSort(t *testing.T) {
+	N := 1000
+	arr := make([]int, N)
+
+	for i := 0; i < N; i++ {
+		arr[i] = rand.Intn(N)
+	}
+
+	SelectionSort(arr)
+	t.Log(arr)
+}
+
+func TestBubbleSort(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+
+	N := 1000
+	arr := make([]int, N)
+	for i := 0; i < N; i++ {
+		arr[i] = rand.Intn(N)
+	}
+
+	bubbleSort(arr)
+	t.Log(arr)
+}
+
+func TestMergeSort(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+
+	N := 20
+	arr := make([]int, N)
+	for i := 0; i < N; i++ {
+		arr[i] = rand.Intn(N)
+	}
+	t.Log(arr)
+	mergeSort(arr)
+	t.Log(arr)
+
+}
+
+func TestShellSort(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+
+	N := 20
+	arr := make([]int, N)
+	for i := 0; i < N; i++ {
+		arr[i] = rand.Intn(N)
+	}
+	t.Log(arr)
+	shellSort(arr)
+	t.Log(arr)
+
+}
+
+func TestCompareSort(t *testing.T) {
+	N := 10000
+	arrs := make([][]int, 3)
+	for i := 0; i < 3; i++ {
+		arrs[i] = make([]int, N)
+	}
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < N; i++ {
+		//v := rand.Intn(N*N)
+		v := rand.Int()
+		for _, arr := range arrs {
+			arr[i] = v
+		}
+	}
+	now := time.Now()
+	QuickSoft(arrs[0])
+	t.Log(arrs[0])
+	t.Log("quick sort", time.Now().Sub(now))
+	time.Sleep(time.Second)
+	now = time.Now()
+	insertionSort(arrs[1])
+	t.Log(arrs[1])
+	t.Log("insertion sort", time.Now().Sub(now))
+	time.Sleep(time.Second)
+	now = time.Now()
+	shellSort(arrs[2])
+	t.Log(arrs[2])
+	t.Log("shell sort", time.Now().Sub(now))
 
 }

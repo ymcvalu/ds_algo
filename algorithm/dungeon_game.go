@@ -1,44 +1,32 @@
 package algorithm
 
-import "unsafe"
-
 func calculateMinimumHP(dungeon [][]int) int {
 	if len(dungeon) == 0 || len(dungeon[0]) == 0 {
 		return 1
 	}
-
-	// max int
-	min := (1 << (8*unsafe.Sizeof(int(1)) - 1)) - 1
-	calcMinHP(dungeon, 0, 0, 0, 0, &min)
-	return min
-}
-
-func calcMinHP(dungeon [][]int, i, j int, max, h int, curMin *int) {
-	h += dungeon[i][j]
-	if h < max {
-		max = h
+	li := len(dungeon)
+	lj := len(dungeon[0])
+	dp := make([][]int, li)
+	for i := 0; i < li; i++ {
+		dp[i] = make([]int, lj)
 	}
 
-	if i == len(dungeon)-1 && j == len(dungeon[0])-1 {
-		if max == 0 {
-			max = 1
-		} else if max < 0 {
-			max = 1 - max
+	dp[li-1][lj-1] = 1
+
+	for i := li - 1; i >= 0; i-- {
+		for j := lj - 1; j >= 0; j-- {
+			if i == li-1 {
+				if j == lj-1 {
+					continue
+				}
+				dp[i][j] = max(1, dp[i][j+1]-dungeon[i][j+1])
+			} else if j == lj-1 {
+				dp[i][j] = max(1, dp[i+1][j]-dungeon[i+1][j])
+			} else {
+				dp[i][j] = min(max(1, dp[i+1][j]-dungeon[i+1][j]), max(1, dp[i][j+1]-dungeon[i][j+1]))
+			}
 		}
-		if max < *curMin {
-			*curMin = max
-		}
 	}
 
-	// 减枝
-	if 1-max > *curMin {
-		return
-	}
-
-	if i+1 < len(dungeon) {
-		calcMinHP(dungeon, i+1, j, max, h, curMin)
-	}
-	if j+1 < len(dungeon[0]) {
-		calcMinHP(dungeon, i, j+1, max, h, curMin)
-	}
+	return max(1, dp[0][0]-dungeon[0][0])
 }

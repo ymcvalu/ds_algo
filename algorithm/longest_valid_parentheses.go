@@ -17,18 +17,18 @@ Explanation: The longest valid parentheses substring is "()()"
 
 func longestValidParentheses(s string) int {
 	max := 0
-	arr := make([]int, len(s))
+	dp := make([]int, len(s))
 	for i := 1; i < len(s); i++ {
 		if s[i] == ')' {
-			if i-arr[i-1]-1 >= 0 && s[i-1-arr[i-1]] == '(' {
-				arr[i] = arr[i-1] + 2
-				if i-arr[i-1]-2 > 0 {
-					arr[i] += arr[i-2-arr[i-1]]
+			if i-dp[i-1]-1 >= 0 && s[i-1-dp[i-1]] == '(' {
+				dp[i] = dp[i-1] + 2
+				if i-dp[i-1]-2 > 0 {
+					dp[i] += dp[i-2-dp[i-1]]
 				}
 			}
 
-			if arr[i] > max {
-				max = arr[i]
+			if dp[i] > max {
+				max = dp[i]
 			}
 
 		}
