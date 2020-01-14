@@ -398,13 +398,34 @@ func TestCompareSort(t *testing.T) {
 	t.Log("quick sort", time.Now().Sub(now))
 	time.Sleep(time.Second)
 	now = time.Now()
-	insertionSort(arrs[1])
+	quickSort3(arrs[1])
 	t.Log(arrs[1])
-	t.Log("insertion sort", time.Now().Sub(now))
+	t.Log("quick sort3", time.Now().Sub(now))
 	time.Sleep(time.Second)
 	now = time.Now()
 	shellSort(arrs[2])
 	t.Log(arrs[2])
 	t.Log("shell sort", time.Now().Sub(now))
 
+}
+
+func TestBinarySearch(t *testing.T) {
+	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	t.Log(binarySearch(arr, 1))
+	t.Log(binarySearch(arr, 3))
+	t.Log(binarySearch(arr, 6))
+	t.Log(binarySearch(arr, 8))
+	t.Log(binarySearch(arr, 10))
+	t.Log(binarySearch(arr, 11))
+	t.Log(binarySearch(arr, 7))
+}
+
+func TestTopK(t *testing.T) {
+	arr := []int{4, 2, 6, 4, 2, 6, 8, 9, 10, 3, 1, 3}
+	t.Log(topk(arr, 1))
+	t.Log(topk(arr, 2))
+	t.Log(topk(arr, 3))
+	t.Log(topk(arr, 4))
+	t.Log(topk(arr, 5))
+	t.Log(topk(arr, 6))
 }
