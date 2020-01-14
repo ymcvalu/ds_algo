@@ -351,6 +351,19 @@ func TestMergeSort(t *testing.T) {
 
 }
 
+func TestQuickSoft3(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+
+	N := 20
+	arr := make([]int, N)
+	for i := 0; i < N; i++ {
+		arr[i] = rand.Intn(N)
+	}
+	t.Log(arr)
+	quickSort3(arr)
+	t.Log(arr)
+}
+
 func TestShellSort(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 
