@@ -429,3 +429,20 @@ func TestTopK(t *testing.T) {
 	t.Log(topk(arr, 5))
 	t.Log(topk(arr, 6))
 }
+
+func TestBM(t *testing.T){
+	t.Log(bm("abcdefg","abc"))
+	t.Log(bm("adjksd","jks"))
+	t.Log(bm("eidosljdls","dls"))
+}
+
+
+func TestKMP(t *testing.T){
+	t.Log(kmp("abcdefg","abc"))
+	t.Log(kmp("adjksd","jks"))
+	t.Log(kmp("eidosljdls","dls"))
+}
+
+func TestGetNext(t *testing.T){
+	t.Log(getNext("ababdababcaba"))
+}
