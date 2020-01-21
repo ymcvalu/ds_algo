@@ -13,7 +13,9 @@ func genBC(pattern string) []int {
 }
 
 func genGS(pattern string) ([]int, []bool) {
+	// prefix[k]=true：长为k的后缀是pattern的前缀
 	prefix := make([]bool, len(pattern))
+	// suffix[k]=idx：常为k的后缀在pattern中存在，最后一次非后缀出现的起始下标为idx
 	suffix := make([]int, len(pattern))
 	for i := range suffix {
 		suffix[i] = -1
@@ -39,11 +41,11 @@ func genGS(pattern string) ([]int, []bool) {
 
 func moveByGS(j, m int, suffix []int, prefix []bool) int {
 	k := m - j - 1       // 已经匹配的后缀字符串为[j+1,m-1]，k为字符个数
-	if suffix[k] != -1 { // 字符串中包含该后缀
+	if suffix[k] != -1 { // 字符串中包含suffix
 		return j - suffix[k] + 1
 	}
 
-	// 查找后缀的字串是否是模式串的前缀
+	// suffix是否存在后缀是模式串的前缀
 	for r := j + 2; r <= m-1; r++ {
 		if prefix[m-r] == true {
 			return r
