@@ -1,22 +1,21 @@
 package algorithm
 
-func quickSort3(arr []int) {
+func quickSort3a(arr []int) {
 	ln := len(arr)
-	if ln <= 2 {
+	if ln < 2 {
 		return
 	}
-	l, r := partition3(arr)
-
-	if len(arr[:l]) > 2 {
-		quickSort3(arr[:l])
+	l, r := partition3a(arr)
+	if len(arr[:l]) > 1 {
+		quickSort3a(arr[:l])
 	}
-	if len(arr[r:]) > 2 {
-		quickSort3(arr[r:])
+	if len(arr[r:]) > 1 {
+		quickSort3a(arr[r:])
 	}
 
 }
 
-func partition3(arr []int) (l, r int) {
+func partition3a(arr []int) (l, r int) {
 
 	ln := len(arr)
 	if ln < 2 {
@@ -33,7 +32,9 @@ func partition3(arr []int) (l, r int) {
 				p++
 				continue
 			}
+
 			arr[l], arr[p] = arr[p], arr[l]
+
 			l++
 			p++
 		}
@@ -46,15 +47,55 @@ func partition3(arr []int) (l, r int) {
 			break
 		}
 
-		if arr[q] == v {
-			arr[p], arr[q] = arr[q], arr[p]
-		} else {
-			arr[l], arr[q] = arr[q], arr[l]
+		arr[p], arr[q] = arr[q], arr[p]
+		if arr[p] < v {
+			arr[l], arr[p] = arr[p], arr[l]
 			l++
 		}
+
+		p++
+		q--
+
 	}
 
 	r = p
 
+	return
+}
+
+func quickSort3b(arr []int) {
+	ln := len(arr)
+	if ln < 2 {
+		return
+	}
+	l, r := partition3b(arr)
+	if len(arr[:l]) > 1 {
+		quickSort3b(arr[:l])
+	}
+	if len(arr[r:]) > 1 {
+		quickSort3b(arr[r:])
+	}
+
+}
+func partition3b(arr []int) (l, r int) {
+	ln := len(arr)
+	l = 0
+	r = ln - 1
+	v := arr[0]
+
+	for i := 1; i <= r; {
+		if arr[i] < v {
+			arr[l], arr[i] = arr[i], arr[l]
+			l++
+			i++
+		} else if arr[i] > v {
+			arr[r], arr[i] = arr[i], arr[r]
+			r--
+		} else {
+			i++
+		}
+	}
+
+	r += 1
 	return
 }

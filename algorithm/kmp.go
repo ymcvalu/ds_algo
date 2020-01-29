@@ -2,6 +2,7 @@ package algorithm
 
 func getNext(pattern string) []int {
 	next := make([]int, len(pattern))
+	// next[i]=k => pattern[:k+1]是pattern[:i+1]的最长后缀，k=-1则不是
 	next[0] = -1
 	k := -1
 	for i := 1; i < len(pattern); i++ {
@@ -21,6 +22,9 @@ func getNext(pattern string) []int {
 }
 
 func kmp(str, pattern string) int {
+	if len(pattern) > len(str) {
+		return -1
+	}
 	next := getNext(pattern)
 	j := 0
 	for i := 0; i < len(str); i++ {
@@ -31,7 +35,7 @@ func kmp(str, pattern string) int {
 			j++
 		}
 		if j == len(pattern) {
-			return i - len(pattern) + 1
+			return i - j + 1
 		}
 	}
 

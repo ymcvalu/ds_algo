@@ -3,6 +3,7 @@ package algorithm
 import (
 	"math"
 	"math/rand"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -360,7 +361,7 @@ func TestQuickSoft3(t *testing.T) {
 		arr[i] = rand.Intn(N)
 	}
 	t.Log(arr)
-	quickSort3(arr)
+	quickSort3a(arr)
 	t.Log(arr)
 }
 
@@ -378,34 +379,75 @@ func TestShellSort(t *testing.T) {
 
 }
 
-func TestCompareSort(t *testing.T) {
-	N := 10000
-	arrs := make([][]int, 3)
-	for i := 0; i < 3; i++ {
-		arrs[i] = make([]int, N)
-	}
+func TestLinkedListQuickSort(t *testing.T) {
+	N := 20
+	M := 100
+	arr := make([]int, N)
 	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < N; i++ {
-		//v := rand.Intn(N*N)
-		v := rand.Int()
+		arr[i] = rand.Intn(M)
+	}
+	head := arr2LinkedList(arr)
+
+	LinkedListQuickSort(head)
+	t.Log(arr)
+	printList("soft", head)
+}
+
+func TestCompareSort(t *testing.T) {
+	type SortAlgo struct {
+		Func func([]int)
+		Name string
+	}
+
+	algos := []SortAlgo{
+		{
+			Func: QuickSoft,
+			Name: "quick sort",
+		},
+		{
+			Func: quickSort3a,
+			Name: "quick sort 3a",
+		},
+		{
+			Func: quickSort3b,
+			Name: "quick sort 3b",
+		},
+		{
+			Func: shellSort,
+			Name: "shell sort",
+		},
+	}
+
+	N := 100000
+	M := 100
+	arrs := make([][]int, len(algos))
+	for i := 0; i < len(algos); i++ {
+		arrs[i] = make([]int, N)
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	for i := 0; i < N; i++ {
+		v := rand.Intn(M)
 		for _, arr := range arrs {
 			arr[i] = v
 		}
 	}
-	now := time.Now()
-	QuickSoft(arrs[0])
-	t.Log(arrs[0])
-	t.Log("quick sort", time.Now().Sub(now))
-	time.Sleep(time.Second)
-	now = time.Now()
-	quickSort3(arrs[1])
-	t.Log(arrs[1])
-	t.Log("quick sort3", time.Now().Sub(now))
-	time.Sleep(time.Second)
-	now = time.Now()
-	shellSort(arrs[2])
-	t.Log(arrs[2])
-	t.Log("shell sort", time.Now().Sub(now))
+
+	for i, algo := range algos {
+		time.Sleep(time.Second)
+		now := time.Now()
+		algo.Func(arrs[i])
+		t.Log(algo.Name, time.Now().Sub(now))
+	}
+
+	if len(arrs) > 1 {
+		for i := 1; i < len(arrs); i++ {
+			if !reflect.DeepEqual(arrs[0], arrs[i]) {
+				t.Errorf("%s is incorrent", algos[i].Name)
+			}
+		}
+	}
 
 }
 
@@ -430,19 +472,202 @@ func TestTopK(t *testing.T) {
 	t.Log(topk(arr, 6))
 }
 
-func TestBM(t *testing.T){
-	t.Log(bm("abcdefg","abc"))
-	t.Log(bm("adjksd","jks"))
-	t.Log(bm("eidosljdls","dls"))
+func TestBM(t *testing.T) {
+	t.Log(bm("abcdefg", "abc"))
+	t.Log(bm("adjksd", "jks"))
+	t.Log(bm("eidosljdls", "dls"))
 }
 
-
-func TestKMP(t *testing.T){
-	t.Log(kmp("abcdefg","abc"))
-	t.Log(kmp("adjksd","jks"))
-	t.Log(kmp("eidosljdls","dls"))
+func TestKMP(t *testing.T) {
+	t.Log(kmp("abcdefg", "abc"))
+	t.Log(kmp("adjksd", "jks"))
+	t.Log(kmp("eidosljdls", "dls"))
 }
 
-func TestGetNext(t *testing.T){
+func TestGetNext(t *testing.T) {
 	t.Log(getNext("ababdababcaba"))
+}
+
+func TestFindNumInMatrix(t *testing.T) {
+	t.Log(FindNumInMatrix([]int{1, 2, 8, 9, 2, 4, 9, 12, 4, 7, 10, 13, 6, 8, 11, 15}, 4, 4, 7))
+	t.Log(FindNumInMatrix([]int{1, 2, 8, 9, 2, 4, 9, 12, 4, 7, 10, 13, 6, 8, 11, 15}, 4, 4, 20))
+}
+
+func TestTraverseBinaryTree(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	TraverseBinaryTree(root)
+}
+
+func TestStackQueue(t *testing.T) {
+	q := NewQueue()
+	q.Push(1)
+	q.Push(2)
+	q.Push(3)
+	t.Log(q.Pop())
+	t.Log(q.Pop())
+	q.Push(4)
+	q.Push(5)
+	t.Log(q.Pop())
+	t.Log(q.Pop())
+	t.Log(q.Pop())
+	t.Log(q.Pop())
+}
+
+func TestQueueStack(t *testing.T) {
+	stk := NewStack()
+	stk.Push(1)
+	stk.Push(2)
+	t.Log(stk.Pop())
+	stk.Push(3)
+	t.Log(stk.Pop())
+	t.Log(stk.Pop())
+	t.Log(stk.Pop())
+}
+
+func TestFibonacci(t *testing.T) {
+	t.Log(FibonacciA(30))
+	t.Log(FibonacciB(30))
+	t.Log(FibonacciC(30))
+}
+
+func TestMinOfRotateArr(t *testing.T) {
+	t.Log(MinOfRotateArr([]int{3, 4, 5, 1, 2}))
+	t.Log(MinOfRotateArr([]int{1, 2, 3, 4, 5}))
+	t.Log(MinOfRotateArr([]int{5, 1, 2, 3, 4}))
+}
+
+func TestDumpWater(t *testing.T) {
+	DumpWater()
+}
+
+func TestFindLadders(t *testing.T) {
+	t.Log(findLadders("hit", "cog", []string{"hot", "dot", "dog", "lot", "log", "cog"}))
+	t.Log(findLadders("hit", "cog", []string{"hot", "dot", "dog", "lot", "log"}))
+}
+
+func TestLCA(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	t.Log(LCA(root, 10, 6).Value, 10)
+	t.Log(LCA(root, 4, 8).Value, 6)
+	t.Log(LCA(root, 8, 12).Value, 10)
+	t.Log(LCA(root, 4, 16).Value, 10)
+	t.Log(LCA(root, 12, 16).Value, 14)
+}
+
+func TestTopologicalSort(t *testing.T) {
+	g := buildGraph(true, 13, 0, 6, 0, 1, 0, 5, 2, 0, 2, 3, 3, 5, 5, 4, 6, 4, 6, 9, 7, 6, 8, 7, 9, 10, 9, 11, 9, 12, 11, 12)
+	t.Log(topologicalSortA(g))
+	t.Log(topologicalSortB(g))
+}
+
+func TestKruskal(t *testing.T) {
+	t.Log(kruskal(8, []Edge{
+		{0, 7, 0.16},
+		{2, 3, 0.17},
+		{1, 7, 0.19},
+		{0, 2, 0.26},
+		{5, 7, 0.28},
+		{1, 3, 0.29},
+		{1, 5, 0.32},
+		{2, 7, 0.34},
+		{4, 5, 0.35},
+		{1, 2, 0.36},
+		{4, 7, 0.37},
+		{0, 4, 0.38},
+		{6, 2, 0.40},
+		{2, 6, 0.52},
+		{6, 0, 0.58},
+		{6, 4, 0.93},
+	}))
+}
+
+func TestDijkstraSP(t *testing.T) {
+	g := buildWeightGraph(true, 8, []Edge{
+		{0, 1, 5},
+		{0, 3, 2},
+		{0, 5, 1},
+		{2, 1, 1},
+		{3, 2, 2},
+		{4, 1, 1},
+		{5, 4, 2},
+		{5, 6, 3},
+		{5, 7, 5},
+		{6, 7, 1},
+	})
+	dist := dijkstraSP(g, 0)
+	t.Log(dist)
+}
+
+func TestBellmanFordSP(t *testing.T) {
+	g := buildWeightGraph(true, 8, []Edge{
+		{0, 1, 5},
+		{0, 3, 2},
+		{0, 5, 1},
+		{2, 1, 1},
+		{3, 2, 2},
+		{4, 1, 1},
+		{5, 4, 2},
+		{5, 6, 3},
+		{5, 7, -5},
+		{6, 7, 1},
+	})
+	dist := BellmanFord(g, 0)
+	t.Log(dist)
+
+	g = buildWeightGraph(true, 3, []Edge{
+		{0, 1, 1},
+		{0, 2, 2},
+		{2, 1, -2},
+	})
+	t.Log(BellmanFord(g, 0))
+}
+
+func TestFloydWarshall(t *testing.T) {
+	g := buildWeightGraph(true, 8, []Edge{
+		{0, 1, 5},
+		{0, 3, 2},
+		{0, 5, 1},
+		{2, 1, 1},
+		{3, 2, 2},
+		{4, 1, 1},
+		{5, 4, 2},
+		{5, 6, 3},
+		{5, 7, -5},
+		{6, 7, 1},
+	})
+	dp := FloydWarshall(g)
+	t.Log(dp[0])
+
+	g = buildWeightGraph(true, 4, []Edge{
+		{0, 2, -2},
+		{1, 0, 4},
+		{1, 2, 3},
+		{3, 1, -1},
+		{2, 3, 2},
+	})
+	t.Log(FloydWarshall(g))
+
+	g = buildWeightGraph(true, 5, []Edge{
+		{0, 1, 1},
+		{0, 2, 4},
+		{0, 3, 1},
+		{1, 2, 2},
+		{2, 4, 3},
+		{3, 2, 1},
+	})
+	t.Log(FloydWarshall(g)[0])
+
+	g = buildWeightGraph(true, 3, []Edge{
+		{0, 1, 1},
+		{1, 2, -1},
+		{2, 0, -1},
+	})
+	t.Log(FloydWarshall(g))
+}
+
+func TestFisherYatesShuffle(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		time.Sleep(time.Millisecond * 10)
+		t.Log(FisherYatesShuffle(10))
+	}
 }

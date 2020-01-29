@@ -16,6 +16,7 @@ func Prim(graph [][]int64) {
 		dist[i] = graph[0][i]
 	}
 
+	// 可以使用heap优化
 	for {
 		idx := findMin(dist)
 		if idx == -1 {
