@@ -28,7 +28,12 @@ func shellSort(arr []int) {
 		return
 	}
 
-	for g := 11; g > 0; g -= 2 {
+	g := 1
+	for g <= ln/3 {
+		g = g*3 + 1
+	}
+
+	for ; g > 0; g = (g - 1) / 3 {
 		for i := g; i < ln; i++ {
 			v := arr[i]
 			j := i - g

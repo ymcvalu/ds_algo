@@ -1,6 +1,7 @@
 package algorithm
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"reflect"
@@ -669,5 +670,60 @@ func TestFisherYatesShuffle(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		time.Sleep(time.Millisecond * 10)
 		t.Log(FisherYatesShuffle(10))
+	}
+}
+
+func TestSplitRope(t *testing.T) {
+	t.Log(splitRopeDP(2))
+	t.Log(splitRopeDP(3))
+	t.Log(splitRopeDP(6))
+	t.Log(splitRopeDP(7))
+	t.Log(splitRopeDP(8))
+
+}
+
+func TestMorrisTraverseTreeInOrder(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	morrisTraverseInOrder(root)
+	fmt.Println()
+	InOrder(root)
+	fmt.Println()
+}
+
+func TestMorrisTraverseTreePreOrder(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	morrisTraversePreOrder(root)
+	fmt.Println()
+	PreOrder(root)
+	fmt.Println()
+}
+
+func TestMorrisTraverseTreePostOrder(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	morrisTraversePostOrder(root)
+	fmt.Println()
+	PostOrder(root)
+	fmt.Println()
+}
+
+func TestFindGreatestSumOfSubarray(t *testing.T) {
+	t.Log(findGreatestSumOfSubarray([]int{1, -2, 3, 10, -4, 7, 2, -5}))
+}
+
+func TestSpliceArrayToMinNumber(t *testing.T) {
+	spliceArrayToMinNumber([]int{3, 32, 321})
+}
+
+func TestInversePairs(t *testing.T) {
+	arrs := [][]int{
+		{1, 2, 3, 4, 5, 6}, //0
+		{7, 5, 6, 4},       // 5
+		{7, 5, 6, 4, 1},    // 9
+		{7, 2, 4, 6, 4},    // 5
+		{7, 2, 5, 6, 4, 1}, // 11
+	}
+
+	for _, arr := range arrs {
+		t.Log(InversePairs(arr), arr)
 	}
 }
