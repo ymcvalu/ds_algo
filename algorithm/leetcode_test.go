@@ -727,3 +727,37 @@ func TestInversePairs(t *testing.T) {
 		t.Log(InversePairs(arr), arr)
 	}
 }
+
+func TestTreeSerialize(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	s := treeSerialize(root)
+	t.Log(s)
+
+	newTree := treeDeserialize(s)
+
+	PreOrder(newTree)
+	InOrder(newTree)
+}
+
+func TestDreamOfMondriann(t *testing.T) {
+	type Case struct {
+		N int
+		M int
+		R int
+	}
+
+	cases := []Case{
+		{1, 2, 1},
+		{1, 3, 0},
+		{1, 4, 1},
+		{2, 2, 2},
+		{2, 3, 3},
+		{2, 4, 5},
+		{2, 11, 144},
+		{4, 11, 51205},
+	}
+	for _, c := range cases {
+		r := dreamOfMondriann(c.N, c.M)
+		t.Log(c, r, c.R == r)
+	}
+}
