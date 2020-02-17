@@ -111,7 +111,7 @@ func (s *SkipList) Delete(key interface{}) error {
 func (s *SkipList) randomHeight() int {
 	h := 1
 
-	for h < s.maxLevel && rand.Intn(0xFFFF) < 0xFFFF>>2 {
+	for h < s.maxLevel && rand.Int()&0xFFFF < 0xFFFF>>2 {
 		h++
 	}
 
