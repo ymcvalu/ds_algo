@@ -761,3 +761,11 @@ func TestDreamOfMondriann(t *testing.T) {
 		t.Log(c, r, c.R == r)
 	}
 }
+
+func TestTreeZigZag(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 7, 6, 8, 15, 13, 16}, []int{6, 7, 8, 10, 13, 15, 16})
+	TreeZigZag(root)
+
+	root = RecoverBinaryTree([]int{1, 2, 4, 8, 9, 5, 10, 11, 3, 6, 12, 13, 7, 14, 15}, []int{8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15})
+	TreeZigZag(root)
+}

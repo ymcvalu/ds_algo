@@ -66,7 +66,9 @@ func (sl *SkipList) Insert(score float64, key []byte) {
 		}
 
 		for x.level[i] != nil &&
+			// 首先比较分数
 			(x.level[i].score < score ||
+				// 分数相同则按照key的字节序排序
 				(x.level[i].score == score && bytes.Compare(x.level[i].key, key) < 0)) {
 			rank[i] += x.span[i]
 			x = x.level[i]
@@ -198,6 +200,7 @@ func randomLevel() int {
 	return h
 }
 
+// help debug
 func (sl *SkipList) print() {
 	c := sl.header
 	for c != nil {
