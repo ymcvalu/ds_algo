@@ -54,7 +54,7 @@ func TestLongestPalindromicSubstring(t *testing.T) {
 func TestRegMatch(t *testing.T) {
 	t.Log(isMatch("bbab", "b*a*b"))
 	t.Log(isMatch("bbbba", ".*a*a"))
-	t.Log(isMatch("mississippi", "mis*is*p*.*"))
+	t.Log(isMatch("mississippi", "mis*is*P*.*"))
 }
 
 func TestZigZagConvert(t *testing.T) {
@@ -186,10 +186,6 @@ func TestThrowEgg(t *testing.T) {
 	t.Log(throwEgg(100, 2)) // 14
 	t.Log(throwEgg(200, 2)) // 20
 	t.Log(throwEgg(10, 3))
-}
-
-func TestFindOneElem3(t *testing.T) {
-	t.Log(findOneElem3([]int{1, 2, 3, 1, 2, 3, 1, 2, 3, 4}))
 }
 
 func TestFindOneElem2(t *testing.T) {
@@ -768,4 +764,121 @@ func TestTreeZigZag(t *testing.T) {
 
 	root = RecoverBinaryTree([]int{1, 2, 4, 8, 9, 5, 10, 11, 3, 6, 12, 13, 7, 14, 15}, []int{8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15})
 	TreeZigZag(root)
+}
+
+func TestStringMinWindow(t *testing.T) {
+	cases := []struct {
+		s string
+		t string
+		r string
+	}{
+		{"ADOBECODEBANC", "ABC", "BANC"},
+		{"ABCDEFGFJAKLD", "CE", "CDE"},
+		{"ABCDEDFSDSDSD", "BDE", "BCDE"},
+		{"aa", "aa", "aa"},
+	}
+	for _, c := range cases {
+		if r := stringMinWindow(c.s, c.t); c.r != r {
+			t.Errorf("failed pass %s %s, %s != %s", c.s, c.t, r, c.r)
+		}
+	}
+}
+
+func TestFindSubstring(t *testing.T) {
+	cases := []struct {
+		s     string
+		words []string
+		r     []int
+	}{
+		{
+			s:     "barfoothefoobarman",
+			words: []string{"foo", "bar"},
+			r:     []int{0, 9},
+		}, {
+			s:     "wordgoodgoodgoodbestword",
+			words: []string{"word", "good", "best", "word"},
+			r:     []int{},
+		}, {
+			s:     "wordgoodgoodgoodbestword",
+			words: []string{"word", "good", "best", "word"},
+			r:     []int{},
+		},
+		{
+			s:     "wordgoodgoodgoodbestwordword",
+			words: []string{"word", "good", "best", "word"},
+			r:     []int{12},
+		},
+		{
+			s:     "barfoofoobarthefoobarman",
+			words: []string{"bar", "foo", "the"},
+			r:     []int{6, 9, 12},
+		},
+		{
+			s:     "wordgoodgoodgoodbestword",
+			words: []string{"word", "good", "best", "good"},
+			r:     []int{8},
+		},
+	}
+	for _, c := range cases {
+		if r := findSubstring(c.s, c.words); !reflect.DeepEqual(r, c.r) {
+			t.Errorf("failed to pass %s %v, %v != %v", c.s, c.words, r, c.r)
+		}
+	}
+}
+
+func TestMinSubArrayLen(t *testing.T) {
+	cases := []struct {
+		s    int
+		nums []int
+		r    int
+	}{
+		{
+			s:    7,
+			nums: []int{2, 3, 1, 2, 4, 3},
+			r:    2,
+		},
+		{
+			s:    6,
+			nums: []int{10, 2, 3},
+			r:    1,
+		},
+	}
+	for _, c := range cases {
+		if r := minSubArrayLen(c.s, c.nums); r != c.r {
+			t.Errorf("failed to pass %d %v, %d != %d", c.s, c.nums, c.r, r)
+		}
+	}
+}
+
+func TestFindLength(t *testing.T) {
+	cases := []struct {
+		A []int
+		B []int
+		r int
+	}{
+		{
+			A: []int{1, 2, 3, 2, 1},
+			B: []int{3, 2, 1, 4, 7},
+			r: 3,
+		},
+	}
+
+	for _, c := range cases {
+		if r := findLength(c.A, c.B); r != c.r {
+			t.Errorf("faield to pass %v %v, %d != %d", c.A, c.B, c.r, r)
+		}
+	}
+}
+
+func TestMinStack(t *testing.T) {
+	minStk := ConstructorMiniStack()
+	minStk.Push(-2)
+	minStk.Push(0)
+	minStk.Push(-3)
+	t.Log(minStk.GetMin())
+	minStk.Pop()
+	t.Log(minStk.GetMin())
+	t.Log(minStk.Top())
+	minStk.Pop()
+	t.Log(minStk.GetMin())
 }

@@ -34,6 +34,7 @@ Note:
 */
 
 // 只能得到局部最优解
+// 最优解估计要用状态压缩dp
 func cherryPickup(grid [][]int) int {
 	n := len(grid)
 

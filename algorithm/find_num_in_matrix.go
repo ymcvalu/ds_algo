@@ -22,3 +22,4 @@ func FindNumInMatrix(matrix []int, rows, cols int, num int) bool {
 
 	return false
 }
+

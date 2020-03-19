@@ -32,18 +32,18 @@ func rob(nums []int) ([]int, int) {
 		return []int{0}, nums[0]
 	}
 
-	var ms = make([]int, len(nums))
-	ms[0] = nums[0]
-	ms[1] = max(nums[0], nums[1])
+	var dp = make([]int, len(nums))
+	dp[0] = nums[0]
+	dp[1] = max(nums[0], nums[1])
 	for i := 2; i < ln; i++ {
-		ms[i] = max(ms[i-1], ms[i-2]+nums[i])
+		dp[i] = max(dp[i-1], dp[i-2]+nums[i])
 	}
 
 	path := make([]int, 0)
 
-	n := ms[ln-1]
+	n := dp[ln-1]
 	for i := ln - 1; i > 1; i-- {
-		if ms[i] == n && n == ms[i-2]+nums[i] {
+		if dp[i] == n && n == dp[i-2]+nums[i] {
 			path = append(path, i)
 			n -= nums[i]
 		}
@@ -57,5 +57,5 @@ func rob(nums []int) ([]int, int) {
 		}
 	}
 
-	return path, ms[ln-1]
+	return path, dp[ln-1]
 }
