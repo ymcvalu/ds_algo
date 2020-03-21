@@ -156,10 +156,10 @@ func TestEditDist(t *testing.T) {
 	}
 
 	for i := range hello {
-		t.Log(hello[i], editDist(hello[i], "hello"))
+		t.Log(hello[i], minDistance(hello[i], "hello"))
 	}
 
-	t.Log(editDist("xxxxyyyyxx", "yyyyy"))
+	t.Log(minDistance("xxxxyyyyxx", "yyyyy"))
 
 }
 
