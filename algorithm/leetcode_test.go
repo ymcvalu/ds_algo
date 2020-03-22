@@ -882,3 +882,17 @@ func TestMinStack(t *testing.T) {
 	minStk.Pop()
 	t.Log(minStk.GetMin())
 }
+
+func TestRedEnvelope(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	t.Log(divideRedEnvelope2xMean(100, 5))
+	t.Log(divideRedEnvelopeLinearSplit(100, 5))
+}
+
+func TestRandWeight(t *testing.T) {
+	w := []int{1, 10, 50, 100}
+	for i := 0; i < 10; i++ {
+		time.Sleep(time.Second)
+		t.Log(randWeight(w))
+	}
+}
