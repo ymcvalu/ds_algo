@@ -68,7 +68,7 @@ func TestQuickSoft(t *testing.T) {
 }
 
 func TestReverseNodesInKGroup(t *testing.T) {
-	n1 := []int{1, 2, 3}
+	n1 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	l1 := &ListNode{}
 	cur := l1
 	for _, v := range n1 {
@@ -76,7 +76,7 @@ func TestReverseNodesInKGroup(t *testing.T) {
 		cur = cur.Next
 	}
 	l1 = l1.Next
-	l := reverseKGroup(l1, 2)
+	l := ReverseKGroup(l1, 5)
 
 	for l != nil {
 		t.Log(l.Val)
@@ -895,4 +895,10 @@ func TestRandWeight(t *testing.T) {
 		time.Sleep(time.Second)
 		t.Log(randWeight(w))
 	}
+}
+
+func TestLastRemaining(t *testing.T) {
+	t.Log(lastRemainingRecursive(5, 3))
+	t.Log(lastRemainingRecursive(10, 17))
+
 }

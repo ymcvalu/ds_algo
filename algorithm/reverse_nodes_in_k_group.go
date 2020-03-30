@@ -26,6 +26,40 @@ You may not alter the values in the list's nodes, only nodes itself may be chang
  *     Next *ListNode
  * }
  */
+
+func ReverseKGroup(head *ListNode, k int) *ListNode {
+	if head == nil || k <= 1 {
+		return head
+	}
+
+	var slow, fast = head, head
+	var _head, tail *ListNode
+
+	for slow != nil {
+		for i := 0; i < k && fast != nil; i++ {
+			fast = fast.Next
+		}
+
+		cur := slow
+		next := cur.Next
+		for next != fast {
+			next.Next, next, cur = cur, next.Next, next
+		}
+
+		if _head == nil {
+			_head = cur
+		} else {
+			tail.Next = cur
+		}
+
+		tail = slow
+		slow = fast
+	}
+	tail.Next=nil
+
+	return _head
+}
+
 func reverseKGroup(head *ListNode, k int) *ListNode {
 	if head == nil || k == 1 {
 		return head
@@ -67,7 +101,7 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 			t.Next = pre
 		}
 		t = head
-		t.Next=nil
+		t.Next = nil
 		head = post
 	}
 
