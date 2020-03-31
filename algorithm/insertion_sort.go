@@ -1,12 +1,24 @@
 package algorithm
 
 func insertionSort(arr []int) {
-	ln := len(arr)
-	if ln < 2 {
+	//ln := len(arr)
+	//if ln < 2 {
+	//	return
+	//}
+	//
+	//for i := 1; i < ln; i++ {
+	//	v := arr[i]
+	//	j := i - 1
+	//	for ; j >= 0 && arr[j] > v; j-- {
+	//		arr[j+1] = arr[j]
+	//	}
+	//	arr[j+1] = v
+	//}
+	n := len(arr)
+	if n < 2 {
 		return
 	}
-
-	for i := 1; i < ln; i++ {
+	for i := 1; i < n; i++ {
 		v := arr[i]
 		j := i - 1
 		for ; j >= 0 && arr[j] > v; j-- {
@@ -23,24 +35,24 @@ func insertionSort(arr []int) {
 // 比如快排，一次partition，将数组分为前后两部分，后面部分的元素大于前面部分元素，因此可以消除O(N/2*N/2)的有序对
 // shell排序通过跨间隔比较，能够一次交换消除多个有序对
 func shellSort(arr []int) {
-	ln := len(arr)
-	if ln < 2 {
+	n := len(arr)
+	if n < 2 {
 		return
 	}
 
-	g := 1
-	for g <= ln/3 {
-		g = g*3 + 1
+	gap := 1
+	for gap <= n/3 {
+		gap = gap*3 + 1
 	}
 
-	for ; g > 0; g = (g - 1) / 3 {
-		for i := g; i < ln; i++ {
+	for ; gap > 0; gap = (gap - 1) / 3 {
+		for i := gap; i < n; i++ {
 			v := arr[i]
-			j := i - g
-			for ; j >= 0 && arr[j] > v; j -= g {
-				arr[j+g] = arr[j]
+			j := i - gap
+			for ; j >= 0 && arr[j] > v; j -= gap {
+				arr[j+gap] = arr[j]
 			}
-			arr[j+g] = v
+			arr[j+gap] = v
 		}
 	}
 

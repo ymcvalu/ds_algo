@@ -416,7 +416,7 @@ func TestCompareSort(t *testing.T) {
 		},
 	}
 
-	N := 100000
+	N := 1000000
 	M := 100
 	arrs := make([][]int, len(algos))
 	for i := 0; i < len(algos); i++ {
