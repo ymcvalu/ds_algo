@@ -902,3 +902,106 @@ func TestLastRemaining(t *testing.T) {
 	t.Log(lastRemainingRecursive(10, 17))
 
 }
+
+func TestTop2(t *testing.T) {
+	t.Log(Top2([]int{19, 1, 43, 2, 43, 90, 120, 110, 51, 89}))
+}
+
+func TestSetBit(t *testing.T) {
+	t.Log(setBitByRange(0, 0, 0))
+	t.Log(setBitByRange(0, 1, 0))
+	t.Log(setBitByRange(1, 2, 1))
+	t.Log(setBitByRange(0, 3, 0))
+	t.Log(setBitByRange(0, 7, 0))
+	t.Log(setBitByRange(0, 32, 0))
+}
+
+func TestFindMax(t *testing.T) {
+	cases := []struct {
+		arr []int
+		idx int
+	}{
+		{
+			arr: []int{1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5},
+			idx: 7,
+		},
+		{
+			arr: []int{1, 2, 3, 4, 5, 6, 7, 8},
+			idx: 7,
+		},
+		{
+			arr: []int{8, 7, 6, 5, 4, 3, 2, 1},
+			idx: 0,
+		},
+		{
+			arr: []int{1, 2, 3},
+			idx: 2,
+		},
+		{
+			arr: []int{1, 2, 3, 4},
+			idx: 3,
+		},
+		{
+			arr: []int{4, 3, 2, 1},
+			idx: 0,
+		},
+		{
+			arr: []int{4, 3, 2},
+			idx: 0,
+		},
+		{
+			arr: []int{1, 2, 3, 4, 3, 2, 1},
+			idx: 3,
+		},
+		{
+			arr: []int{1, 2, 3, 4, 3, 2},
+			idx: 3,
+		},
+		{
+			arr: []int{1, 2, 3, 2, 1},
+			idx: 2,
+		},
+	}
+
+	for _, c := range cases {
+		if idx := findMax(c.arr, 0); idx != c.idx {
+			t.Errorf("failed to pass %v %d!=%d", c.arr, c.idx, idx)
+		}
+	}
+}
+
+func TestFindNum(t *testing.T) {
+	cases := []struct {
+		arr  []int
+		nums []int
+		has  []bool
+	}{
+		{
+			arr:  []int{1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5},
+			nums: []int{0, 1, 3, 5, 7, 8, 9},
+			has:  []bool{false, true, true, true, true, true, false},
+		},
+		{
+			arr:  []int{1, 2, 3, 4, 5, 6, 7, 8},
+			nums: []int{0, 5, 9, 8},
+			has:  []bool{false, true, false, true},
+		},
+		{
+			arr:  []int{8, 7, 6, 5, 4, 3, 2, 1},
+			nums: []int{9, 8, 6, 1, 0},
+			has:  []bool{false, true, true, true, false},
+		},
+		{
+			arr:  []int{1, 2, 3},
+			nums: []int{0, 3, 4, 5},
+			has:  []bool{false, true, false, false},
+		},
+	}
+	for _, c := range cases {
+		for i := range c.nums {
+			if has := findNum(c.arr, c.nums[i]); has != c.has[i] {
+				t.Errorf("failed to pass %v %d %v!=%v", c.arr, c.nums[i], c.has[i], has)
+			}
+		}
+	}
+}

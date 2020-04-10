@@ -1,5 +1,6 @@
 package algorithm
 
+// 对于k不确定的题目，可以使用partition，时间复杂度为O(nlogn)，partition本身的时间复杂度为O(n)
 func topk(arr []int, k int) int {
 	if k < 1 || len(arr) < k {
 		return -1
