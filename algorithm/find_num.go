@@ -45,7 +45,7 @@ func findMax(arr []int, i int) int {
 
 	mid := (len(arr) - 1) / 2
 
-	if mid+1 == len(arr) || arr[mid+1] > arr[mid] {
+	if mid+1 < len(arr) && arr[mid+1] > arr[mid] {
 		return findMax(arr[mid+1:], i+mid+1)
 	} else {
 		return findMax(arr[:mid+1], i)

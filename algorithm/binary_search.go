@@ -1,16 +1,16 @@
 package algorithm
 
-func binarySearch(arr []int, v int) bool {
+func binarySearch(arr []int, v int) int  {
 	if len(arr) == 0 {
-		return false
+		return -1
 	}
 
 	p := 0
 	q := len(arr) - 1
 	for p <= q {
-		mid := (p + q) / 2
+		mid := (p + q) >>1
 		if arr[mid] == v {
-			return true
+			return mid
 		}
 
 		if arr[mid] < v {
@@ -21,7 +21,7 @@ func binarySearch(arr []int, v int) bool {
 
 	}
 
-	return false
+	return -1
 }
 
 func binary(arr []int, n int) int {

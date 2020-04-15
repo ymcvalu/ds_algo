@@ -1005,3 +1005,38 @@ func TestFindNum(t *testing.T) {
 		}
 	}
 }
+
+func TestTreeToList(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	h := TreeToList(root)
+	c := h.Next
+	for c != nil {
+		t.Log(c.Val)
+		c = c.Next
+	}
+}
+
+func TestIsSymmetric(t *testing.T) {
+	root := RecoverBinaryTree([]int{10, 6, 4, 8, 14, 12, 16}, []int{4, 6, 8, 10, 12, 14, 16})
+	isSymmetric(root)
+}
+
+func TestLengthOfLongestSubstring(t *testing.T) {
+	cases := []struct {
+		str string
+		n   int
+	}{
+		{
+			str: "abba",
+			n:   2,
+		},
+		{
+			str: "",
+		},
+	}
+	for _, c := range cases {
+		if n := lengthOfLongestSubstring(c.str); n != c.n {
+			t.Errorf("failed to pass %s: %d!=%d", c.str, n, c.n)
+		}
+	}
+}
