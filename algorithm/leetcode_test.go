@@ -711,16 +711,43 @@ func TestSpliceArrayToMinNumber(t *testing.T) {
 }
 
 func TestInversePairs(t *testing.T) {
-	arrs := [][]int{
-		{1, 2, 3, 4, 5, 6}, //0
-		{7, 5, 6, 4},       // 5
-		{7, 5, 6, 4, 1},    // 9
-		{7, 2, 4, 6, 4},    // 5
-		{7, 2, 5, 6, 4, 1}, // 11
+	cases := []struct {
+		arr []int
+		n   int
+	}{
+		{
+			arr: []int{1, 2, 3, 4, 5, 6},
+			n:   0,
+		},
+		{
+			arr: []int{7, 5, 6, 4},
+			n:   5,
+		},
+		{
+			arr: []int{7, 5, 6, 4, 1},
+			n:   9,
+		},
+		{
+			arr: []int{7, 2, 4, 6, 4},
+			n:   5,
+		},
+		{
+			arr: []int{7, 2, 5, 6, 4, 1},
+			n:   11,
+		},
+		{
+			arr: []int{7, 5, 6, 4},
+			n:   5,
+		},
+		{
+			arr: []int{1, 3, 2, 3, 1},
+			n:   4,
+		},
 	}
-
-	for _, arr := range arrs {
-		t.Log(InversePairs(arr), arr)
+	for _, c := range cases {
+		if n := InversePairs(c.arr); n != c.n {
+			t.Errorf("faield to pass case %v, %v!=%v", c.arr, c.n, n)
+		}
 	}
 }
 
