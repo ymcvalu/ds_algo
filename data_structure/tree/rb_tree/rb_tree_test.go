@@ -4,6 +4,12 @@ import (
 	"math/rand"
 	"testing"
 	"time"
+	"unsafe"
+)
+
+var (
+	minInt = -1 << (unsafe.Sizeof(int(1))*8 - 1)
+	maxInt = 1<<(unsafe.Sizeof(int(1))*8-1) - 1
 )
 
 func TestRbTree(t *testing.T) {
@@ -12,7 +18,14 @@ func TestRbTree(t *testing.T) {
 
 	set := make(map[int]struct{}, N)
 	rb := New(func(i, j interface{}) int {
-		return i.(int) - j.(int)
+		iv, jv := i.(int), j.(int)
+		if iv > jv {
+			return 1
+		} else if iv == jv {
+			return 0
+		} else {
+			return -1
+		}
 	})
 
 	r := rand.New(rand.NewSource(time.Now().Unix()))
@@ -22,7 +35,7 @@ func TestRbTree(t *testing.T) {
 		rb.Ins(n, struct{}{})
 	}
 
-	if !rb.IsRbTree() {
+	if !rb.IsRbTree(minInt, maxInt) {
 		t.Errorf("not a rb tree after ins")
 		return
 	}
@@ -55,7 +68,9 @@ func TestRbTree(t *testing.T) {
 		}
 	}
 
-	t.Log(rb.IsRbTree())
+	if !rb.IsRbTree(minInt, maxInt) {
+		t.Errorf("it isn't a rb tree after del")
+	}
 }
 
 func TestDel(t *testing.T) {
@@ -77,6 +92,6 @@ func TestDel(t *testing.T) {
 
 	rb.PreOder()
 
-	t.Log(rb.IsRbTree())
+	t.Log(rb.IsRbTree(minInt, maxInt))
 
 }

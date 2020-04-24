@@ -462,7 +462,7 @@ func (t *Tree) PostOrder() {
 	}
 }
 
-func (t *Tree) IsRbTree() bool {
+func (t *Tree) IsRbTree(min, max interface{}) bool {
 	if t.root == nil {
 		return true
 	}
@@ -470,13 +470,17 @@ func (t *Tree) IsRbTree() bool {
 	if t.root.isRed() {
 		return false
 	}
-	_, is := t.root.verify(0)
+	_, is := t.root.verify(0, min, max, t.cmp)
 	return is
 }
 
-func (n *node) verify(h int) (int, bool) {
+func (n *node) verify(h int, min, max interface{}, cmp Compare) (int, bool) {
 	if n == nil {
 		return h, true
+	}
+
+	if cmp(n.k, min) < 0 || cmp(n.k, max) > 0 {
+		return 0, false
 	}
 
 	if n.isRed() && n.p.isRed() {
@@ -487,14 +491,15 @@ func (n *node) verify(h int) (int, bool) {
 		h++
 	}
 
-	lm, is := n.l.verify(h)
+	lm, is := n.l.verify(h, min, n.k, cmp)
 	if !is {
 		return 0, false
 	}
-	rm, is := n.r.verify(h)
-	if !is {
-		return 0, false
-	}
-	return lm, lm == rm
 
+	rm, is := n.r.verify(h, n.k, max, cmp)
+	if !is {
+		return 0, false
+	}
+
+	return lm, lm == rm
 }
