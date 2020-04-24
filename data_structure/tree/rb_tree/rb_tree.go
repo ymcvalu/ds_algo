@@ -479,10 +479,12 @@ func (n *node) verify(h int, min, max interface{}, cmp Compare) (int, bool) {
 		return h, true
 	}
 
-	if cmp(n.k, min) < 0 || cmp(n.k, max) > 0 {
+	// 保证BST性质
+	if cmp(n.k, min) <= 0 || cmp(n.k, max) >= 0 {
 		return 0, false
 	}
 
+	// 不能有两个red-node相连
 	if n.isRed() && n.p.isRed() {
 		return 0, false
 	}
@@ -491,6 +493,7 @@ func (n *node) verify(h int, min, max interface{}, cmp Compare) (int, bool) {
 		h++
 	}
 
+	// 左右子树必须也是rb-tree，并且black-node数量需要一致
 	lm, is := n.l.verify(h, min, n.k, cmp)
 	if !is {
 		return 0, false
