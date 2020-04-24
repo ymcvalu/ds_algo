@@ -41,3 +41,48 @@ func InversePairs(nums []int) int {
     copy(nums,buf)
     return n
 }
+
+// 可以优化，预分配归并排序过程中需要用到的临时切片
+func reversePairs(nums []int)int{
+    if len(nums)<2{
+        return 0
+    }
+    // 预分配临时切片
+    buf:=make([]int,len(nums))
+    return  _reversePairs(nums,buf)
+}
+
+func _reversePairs(nums []int,buf []int) int {
+    ln:=len(nums)
+    if ln<2{
+        return 0
+    }
+
+    mid := ln/2
+    left := nums[:mid]
+    right := nums[mid:]
+    n := _reversePairs(left,buf[:mid])
+    n += _reversePairs(right,buf[mid:])
+    l,r := 0,0
+    ll, lr := len(left), len(right)
+    buf=buf[:0]
+    for l < ll && r < lr{
+        if left[l]<=right[r]{
+            buf=append(buf,left[l])
+            l++
+        }else {
+            buf=append(buf,right[r])
+            n+=ll-l
+            r++
+        }
+    }
+
+    if l<ll{
+        buf=append(buf, left[l:]...)
+    }else {
+        buf=append(buf,right[r:]...)
+    }
+
+    copy(nums,buf)
+    return n
+}
