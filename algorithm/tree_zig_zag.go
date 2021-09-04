@@ -2,7 +2,7 @@ package algorithm
 
 import (
 	"fmt"
-	"leetcode/data_structure/stack"
+	"github.com/ymcvalu/ds_algo/data_structure/stack"
 )
 
 func TreeZigZag(t *Node) {

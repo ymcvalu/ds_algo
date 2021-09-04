@@ -1,6 +1,6 @@
 package algorithm
 
-import "leetcode/data_structure/graph"
+import "github.com/ymcvalu/ds_algo/data_structure/graph"
 
 // 对于无环的加权有向图，只要按照拓扑顺序处理无环有向图的顶点即可
 // 既可以处理最短路径，也可以处理最长路径

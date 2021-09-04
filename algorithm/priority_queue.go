@@ -1,6 +1,6 @@
 package algorithm
 
-import "leetcode/data_structure/heap"
+import "github.com/ymcvalu/ds_algo/data_structure/heap"
 
 type PriorityQueue struct {
 	h *heap.KaryHeap

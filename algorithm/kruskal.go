@@ -1,7 +1,7 @@
 package algorithm
 
 import (
-	"leetcode/data_structure/uf_set"
+	"github.com/ymcvalu/ds_algo/data_structure/uf_set"
 	"sort"
 )
 

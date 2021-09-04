@@ -1,6 +1,6 @@
 package algorithm
 
-import "leetcode/data_structure/stack"
+import "github.com/ymcvalu/ds_algo/data_structure/stack"
 
 type Queue struct {
 	stack1 *stack.Stack

@@ -1,6 +1,6 @@
 package algorithm
 
-import "leetcode/data_structure/graph"
+import "github.com/ymcvalu/ds_algo/data_structure/graph"
 
 func buildGraph(dir bool, n int, pairs ...int) *graph.Graph {
 	g := graph.New(n, dir)

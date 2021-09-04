@@ -1,7 +1,7 @@
 package algorithm
 
 import (
-	"leetcode/data_structure/stack"
+	"github.com/ymcvalu/ds_algo/data_structure/stack"
 	"strconv"
 )
 

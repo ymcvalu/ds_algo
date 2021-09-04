@@ -3,7 +3,7 @@ package algorithm
 import (
 	"errors"
 	"fmt"
-	"leetcode/data_structure/stack"
+	"github.com/ymcvalu/ds_algo/data_structure/stack"
 )
 
 func parse(expr []interface{}) ([]interface{}, error) {

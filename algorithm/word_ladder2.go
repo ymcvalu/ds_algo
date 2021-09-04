@@ -2,7 +2,7 @@ package algorithm
 
 import (
 	"container/list"
-	"leetcode/data_structure/graph"
+	"github.com/ymcvalu/ds_algo/data_structure/graph"
 )
 
 /**
